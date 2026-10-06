@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Health Metric Checker</title>
+
+  <!-- Favicon -->
+  <link href="img/favicon.ico" rel="icon">
+
+  <!-- Google Web Fonts -->
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@400;700&family=Roboto:wght@400;700&display=swap" rel="stylesheet">  
+
+  <!-- Icon Font Stylesheet -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.0/css/all.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
+
+  <!-- Libraries Stylesheet -->
+  <link href="lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
+  <link href="lib/tempusdominus/css/tempusdominus-bootstrap-4.min.css" rel="stylesheet" />
+
+  <!-- Customized Bootstrap Stylesheet -->
+  <link href="css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- Template Stylesheet -->
+  <link href="css/style.css" rel="stylesheet">
+
+  <style>
+    * {
+      box-sizing: border-box;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+    body {
+      background: linear-gradient(to right, #00c6ff, #0072ff);
+      margin: 0;
+      padding: 0;
+    }
+    .card {
+      background-color: #ffffff;
+      border-radius: 20px;
+      padding: 30px;
+      width: 90%;
+      max-width: 500px;
+      box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+      animation: fadeIn 0.6s ease-in-out;
+      margin: 40px auto;
+    }
+    h2 {
+      text-align: center;
+      color: #333;
+      margin-bottom: 20px;
+    }
+    input {
+      width: 100%;
+      padding: 12px;
+      margin: 8px 0;
+      border: 1px solid #ccc;
+      border-radius: 10px;
+      font-size: 16px;
+    }
+    button {
+      width: 100%;
+      background-color: #0072ff;
+      color: white;
+      padding: 12px;
+      border: none;
+      border-radius: 10px;
+      font-size: 16px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+      margin-top: 10px;
+    }
+    button:hover {
+      background-color: #005fdd;
+    }
+    .result {
+      margin-top: 20px;
+      font-size: 14px;
+      text-align: left;
+      color: #444;
+      padding: 15px;
+      background-color: #f2f2f2;
+      border-radius: 10px;
+      line-height: 1.6;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: scale(0.95); }
+      to { opacity: 1; transform: scale(1); }
+    }
+  </style>
+</head>
+
+<body>
+  <!-- Navbar Start -->
+  <div class="container-fluid sticky-top bg-white shadow-sm mb-5">
+    <div class="container">
+      <nav class="navbar navbar-expand-lg bg-white navbar-light py-3 py-lg-0">
+        <a href="index.html" class="navbar-brand">
+          <h1 class="m-0 text-uppercase text-primary"><i class="fa fa-clinic-medical me-2"></i>MEDIXO</h1>
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarCollapse">
+          <div class="navbar-nav ms-auto py-0">
+            <a href="index.html" class="nav-item nav-link">Home</a>
+            <a href="service.html" class="nav-item nav-link">Service</a>
+            <div class="nav-item dropdown">
+              <a href="#" class="nav-link dropdown-toggle active" data-bs-toggle="dropdown">Pages</a>
+              <div class="dropdown-menu m-0">
+                <a href="appointment.html" class="dropdown-item">Appointment</a>
+                <a href="Location.html" class="dropdown-item">Nearest HealthCare</a>
+                <a href="health metric.html" class="dropdown-item">Health Metric</a>
+                <a href="ChatBot.html" class="dropdown-item">ChatBot</a>
+                <a href="Ambulance.html" class="dropdown-item">Nearest Ambulance</a>
+              </div>
+            </div>
+            <a href="contact.html" class="nav-item nav-link">Contact</a>
+          </div>
+        </div>
+      </nav>
+    </div>
+  </div>
+  <!-- Navbar End -->
+  
+  <div class="card">
+    <h2>Comprehensive Health Tracker</h2>
+    <input type="number" id="age" placeholder="Age (years)">
+    <input type="number" id="height" placeholder="Height (cm)">
+    <input type="number" id="weight" placeholder="Weight (kg)">
+    <input type="number" id="heartRate" placeholder="Heart Rate (BPM)">
+    <input type="number" id="steps" placeholder="Daily Steps">
+    <input type="number" id="sleep" placeholder="Sleep Hours">
+    <input type="number" id="calories" placeholder="Calories Consumed">
+    <input type="number" id="water" placeholder="Water Intake (ml)">
+    <input type="number" id="stepGoal" placeholder="Daily Step Goal">
+    <input type="number" id="calorieGoal" placeholder="Daily Calorie Goal">
+    
+    <button onclick="checkHealth()">Analyze Health</button>
+    <div class="result" id="resultBox">
+
+      
+    </div>
+  </div>
+
+  <script>
+    function checkHealth() {
+      // Basic metrics
+      const age = parseInt(document.getElementById('age').value);
+      const height = parseFloat(document.getElementById('height').value) / 100;
+      const weight = parseFloat(document.getElementById('weight').value);
+      const heartRate = parseInt(document.getElementById('heartRate').value);
+      
+      // Activity metrics
+      const steps = parseInt(document.getElementById('steps').value);
+      const sleep = parseFloat(document.getElementById('sleep').value);
+      const calories = parseInt(document.getElementById('calories').value);
+      const water = parseInt(document.getElementById('water').value);
+      
+      // Goals
+      const stepGoal = parseInt(document.getElementById('stepGoal').value);
+      const calorieGoal = parseInt(document.getElementById('calorieGoal').value);
+
+      const resultBox = document.getElementById('resultBox');
+
+      // Validate all inputs
+      if ([age, height, weight, heartRate, steps, sleep, calories, water, stepGoal, calorieGoal].some(v => !v)) {
+        resultBox.textContent = "Please fill in all fields correctly.";
+        return;
+      }
+
+      // BMI Calculation
+      const bmi = weight / (height * height);
+      let bmiStatus = "";
+      if (bmi < 18.5) bmiStatus = "Underweight";
+      else if (bmi < 25) bmiStatus = "Normal";
+      else if (bmi < 30) bmiStatus = "Overweight";
+      else bmiStatus = "Obese";
+
+      // Heart Rate Analysis
+      let hrStatus = "";
+      if (heartRate < 60) hrStatus = "Low (Bradycardia)";
+      else if (heartRate <= 100) hrStatus = "Normal";
+      else hrStatus = "High (Tachycardia)";
+
+      // Activity Analysis
+      const stepDiff = steps - stepGoal;
+      const calorieDiff = calories - calorieGoal;
+      const waterStatus = water >= 2000 ? "Adequate" : "Inadequate";
+
+      // Sleep Analysis
+      let sleepStatus = "";
+      if (sleep < 7) sleepStatus = "Insufficient";
+      else if (sleep <= 9) sleepStatus = "Adequate";
+      else sleepStatus = "Excessive";
+
+      // Calculate Health Score
+      let bmiScore = bmiStatus === "Normal" ? 20 : 
+                    (bmiStatus === "Underweight" || bmiStatus === "Overweight") ? 10 : 5;
+      
+      let hrScore = hrStatus === "Normal" ? 15 : 5;
+      
+      let sleepScore = sleepStatus === "Adequate" ? 15 : 5;
+      
+      let stepsScore = steps >= stepGoal ? 20 : (steps / stepGoal) * 20;
+      stepsScore = Math.round(stepsScore * 10) / 10;
+      
+      let calorieScore = Math.abs(calorieDiff) <= 0.1 * calorieGoal ? 20 : 10;
+      
+      let waterScore = water >= 2000 ? 10 : (water / 2000) * 10;
+      waterScore = Math.round(waterScore * 10) / 10;
+
+      const totalScore = bmiScore + hrScore + sleepScore + stepsScore + calorieScore + waterScore;
+      const roundedTotal = Math.round(totalScore);
+
+      let rating;
+      if (roundedTotal >= 90) rating = "Excellent";
+      else if (roundedTotal >= 75) rating = "Good";
+      else if (roundedTotal >= 50) rating = "Fair";
+      else rating = "Poor";
+
+      // Compile results
+      resultBox.innerHTML = `
+        <strong>Health Analysis:</strong><br>
+        • BMI: ${bmi.toFixed(1)} (${bmiStatus})<br>
+        • Heart Rate: ${heartRate} BPM (${hrStatus})<br>
+        • Sleep: ${sleep} hrs (${sleepStatus})<br>
+        • Steps: ${steps} (${stepDiff >= 0 ? 'Met' : 'Missed'} goal by ${Math.abs(stepDiff)} steps)<br>
+        • Calories: ${calories} kcal (${calorieDiff >= 0 ? 'Exceeded' : 'Under'} by ${Math.abs(calorieDiff)} kcal)<br>
+        • Hydration: ${water} ml (${waterStatus})<br>
+        • Health Score: ${roundedTotal}/100 (${rating})<br><br>
+        
+        <strong>Recommendations:</strong><br>
+        ${generateRecommendations(bmiStatus, hrStatus, sleepStatus, stepDiff, calorieDiff, waterStatus)}
+      `;
+    }
+
+    function generateRecommendations(bmi, hr, sleep, stepDiff, calorieDiff, water) {
+      let recommendations = [];
+      
+      if (bmi !== "Normal") recommendations.push("Maintain a balanced diet and regular exercise routine");
+      if (hr !== "Normal") recommendations.push("Consult a healthcare professional about your heart rate");
+      if (sleep === "Insufficient") recommendations.push("Aim for 7-9 hours of quality sleep nightly");
+      if (sleep === "Excessive") recommendations.push("Consider discussing sleep patterns with a doctor");
+      if (stepDiff < 0) recommendations.push("Try to incorporate more walking into your daily routine");
+      if (Math.abs(calorieDiff) > 0.1 * (calorieDiff + calorieGoal)) recommendations.push("Consider balancing calorie intake with physical activity");
+      if (water === "Inadequate") recommendations.push("Increase water intake to at least 2 liters daily");
+
+      return recommendations.length > 0 
+        ? recommendations.join('<br>• ') 
+        : "Great job! You're meeting all health targets!";
+    }
+  </script>
+  <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="lib/easing/easing.min.js"></script>
+  <script src="lib/waypoints/waypoints.min.js"></script>
+  <script src="lib/owlcarousel/owl.carousel.min.js"></script>
+  <script src="lib/tempusdominus/js/moment.min.js"></script>
+  <script src="lib/tempusdominus/js/moment-timezone.min.js"></script>
+  <script src="lib/tempusdominus/js/tempusdominus-bootstrap-4.min.js"></script>
+</body>
+</html>

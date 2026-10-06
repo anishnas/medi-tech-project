@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>HealthBot - AI Medical Assistant</title>
+  <meta charset="utf-8">
+    <title>MEDINOVA - Hospital Website Template</title>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta content="Free HTML Templates" name="keywords">
+    <meta content="Free HTML Templates" name="description">
+
+    <!-- Favicon -->
+    <link href="img/favicon.ico" rel="icon">
+
+    <!-- Google Web Fonts -->
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@400;700&family=Roboto:wght@400;700&display=swap" rel="stylesheet">  
+
+    <!-- Icon Font Stylesheet -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.0/css/all.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
+
+    <!-- Libraries Stylesheet -->
+    <link href="lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
+    <link href="lib/tempusdominus/css/tempusdominus-bootstrap-4.min.css" rel="stylesheet" />
+
+    <!-- Customized Bootstrap Stylesheet -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Template Stylesheet -->
+    <link href="css/style.css" rel="stylesheet">
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background: url('https://images.unsplash.com/photo-1606207508821-d6f548e9f55b?auto=format&fit=crop&w=1950&q=80') no-repeat center center fixed;
+      background-size: cover;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+    }
+
+    .chat-container {
+      width: 600px;
+      height: 100vh;
+      background: rgba(255, 255, 255, 0.25);
+      backdrop-filter: blur(20px);
+      border-radius: 20px;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.2);
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    .chat-header {
+      background-color: #3b82f6;
+      color: white;
+      padding: 15px;
+      text-align: center;
+      font-size: 1.5rem;
+      font-weight: bold;
+    }
+
+    .disease-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      padding: 16px;
+      justify-content: center;
+      background: rgba(255, 255, 255, 0.2);
+      overflow-y: auto;
+    }
+
+    .disease-btn {
+      background-color: #f3f4f6;
+      border: none;
+      padding: 8px 12px;
+      border-radius: 12px;
+      cursor: pointer;
+      font-size: 0.9rem;
+    }
+
+    .disease-btn:hover {
+      background-color: #e0e7ff;
+    }
+
+    .chat-body {
+      flex: 1;
+      padding: 20px;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .message {
+      padding: 12px 16px;
+      border-radius: 16px;
+      max-width: 75%;
+      word-wrap: break-word;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      animation: fadeIn 0.3s ease;
+    }
+
+    .user-message {
+      align-self: flex-end;
+      background-color: #dbeafe;
+    }
+
+    .bot-message {
+      align-self: flex-start;
+      background-color: #f3f4f6;
+    }
+
+    .message img {
+      width: 24px;
+      height: 24px;
+    }
+
+    .disclaimer {
+      font-size: 0.8rem;
+      color: #f9fafb;
+      text-align: center;
+      padding-top: 10px;
+      max-width: 600px;
+      background-color: rgba(0, 0, 0, 0.5);
+      padding: 10px 18px;
+      border-radius: 10px;
+      margin-top: 12px;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+</head>
+<body>
+  <div class="container-fluid sticky-top bg-white shadow-sm mb-5">
+    <div class="container">
+        <nav class="navbar navbar-expand-lg bg-white navbar-light py-3 py-lg-0">
+            <a href="index.html" class="navbar-brand">
+                <h1 class="m-0 text-uppercase text-primary"><i class="fa fa-clinic-medical me-2"></i>MEDIXO</h1>
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarCollapse">
+                <div class="navbar-nav ms-auto py-0">
+                    <a href="index.html" class="nav-item nav-link">Home</a>
+                    
+                    <a href="service.html" class="nav-item nav-link">Service</a>
+                    
+                    <div class="nav-item dropdown">
+                        <a href="#" class="nav-link dropdown-toggle active" data-bs-toggle="dropdown">Pages</a>
+                        <div class="dropdown-menu m-0">
+                            <a href="appointment.html" class="dropdown-item">Appointment</a>
+                            <a href="Location.html" class="dropdown-item">Nearest HealthCare</a>
+                            <a href="health metric.html" class="dropdown-item">Health Metric</a>
+                            <a href="ChatBot.html" class="dropdown-item">ChatBot</a>
+                            <a href="Ambulance.html" class="dropdown-item">Nearest Ambulance</a>
+                        </div>
+                    </div>
+                    <a href="contact.html" class="nav-item nav-link">Contact</a>
+                </div>
+            </div>
+        </nav>
+    </div>
+</div>
+  <div class="chat-container">
+    <div class="chat-header">HealthBot 🤖</div>
+    <div class="chat-body" id="chatBody"></div>
+    <div class="disease-list" id="diseaseList"></div>
+  </div>
+
+  <script>
+    const knowledgeBase = {
+      fever: "Fever causes a high body temperature, chills, and body aches. You can take paracetamol or ibuprofen to reduce it. Rest well and drink plenty of water.",
+      cold: "A common cold causes a runny nose, sneezing, and sore throat. Antihistamines and decongestants help relieve symptoms. Drink warm fluids and get enough rest.",
+      headache: "Headaches may feel like dull or sharp pain and sometimes come with light sensitivity. You can take paracetamol or ibuprofen. Try resting in a dark, quiet room.",
+      diarrhea: "Diarrhea leads to frequent, watery stools and may cause dehydration. ORS and probiotics help; loperamide can be used in some cases. Drink fluids and eat light food.",
+      cough: "Coughing can be dry or produce mucus and may irritate the throat. Cough syrups and lozenges help. Drink warm liquids and inhale steam.",
+      malaria: "Malaria includes symptoms like fever with chills, nausea, and sweating. It is treated with antimalarial drugs like artemisinin. Use mosquito nets and finish the medication completely.",
+      flu: "The flu causes fever, sore throat, body aches, and fatigue. Antiviral medicine and rest help you recover. Stay isolated to prevent spreading it.",
+      dengue: "Dengue causes high fever, rash, joint pain, and low platelet count. There’s no specific cure, but paracetamol helps with fever. Drink plenty of fluids and avoid aspirin.",
+      allergy: "Allergies can cause sneezing, rashes, or itching. Antihistamines like cetirizine work well. Avoid known allergens and keep your environment clean.",
+      anemia: "Anemia causes tiredness, pale skin, and dizziness. It is treated with iron, vitamin B12, or folic acid supplements. Eat iron-rich foods like spinach or red meat.",
+      asthma: "Asthma causes difficulty in breathing, wheezing, and chest tightness. Inhalers help open airways. Avoid dust, smoke, and known triggers.",
+      bronchitis: "Bronchitis causes a persistent cough with mucus and fatigue. Cough syrups and bronchodilators may be used. Avoid smoking and drink warm fluids.",
+      chickenpox: "Chickenpox shows as an itchy rash with fever and tiredness. Calamine lotion and paracetamol help with symptoms. Stay isolated and avoid scratching.",
+      constipation: "Constipation causes difficulty in passing stools and bloating. Laxatives and fiber supplements help. Drink lots of water and eat high-fiber foods.",
+      "covid-19": "COVID-19 may cause fever, cough, fatigue, and loss of taste or smell. Treatment is mostly supportive with paracetamol and fluids. Isolate, rest, and monitor oxygen levels.",
+      depression: "Depression includes sadness, fatigue, and low interest in activities. Therapy and antidepressants help. Talk to someone and stay socially connected.",
+      diabetes: "Diabetes causes frequent urination, thirst, and fatigue. It’s managed with insulin or tablets like metformin. Eat healthy, monitor blood sugar, and exercise regularly.",
+      eczema: "Eczema causes dry, itchy, inflamed skin. Moisturizers and steroid creams reduce symptoms. Avoid harsh soaps and keep skin moisturized.",
+      fatigue: "Fatigue makes you feel tired and low in energy. Causes vary — sleep, iron levels, or stress. Get proper sleep, eat well, and manage stress.",
+      gastritis: "Gastritis causes stomach pain, bloating, and nausea. Antacids and medicines like omeprazole help. Avoid spicy food and don’t skip meals.",
+      heartburn: "Heartburn feels like burning in the chest from acid reflux. Antacids or H2 blockers reduce acidity. Avoid fried/spicy foods and don’t lie down right after meals.",
+      hypertension: "Often silent, but may cause headache or dizziness. Treated with medicines like amlodipine. Reduce salt, exercise, and check blood pressure regularly.",
+      insomnia: "Insomnia means trouble falling or staying asleep. Melatonin or sleep therapy can help. Keep a sleep routine and avoid screens before bed.",
+      jaundice: "Jaundice turns the skin and eyes yellow, with dark urine. Treatment depends on the cause (often liver-related). Rest and avoid alcohol.",
+      migraine: "Migraines cause intense headaches, often with nausea or sensitivity to light. Painkillers or triptans help. Rest in a dark room and avoid known triggers.",
+      nausea: "Nausea makes you feel like vomiting. Medicines like ondansetron can help. Eat small meals and avoid greasy or spicy food.",
+      pneumonia: "Pneumonia causes cough with mucus, fever, and difficulty breathing. It’s treated with antibiotics and rest. Seek medical help if symptoms worsen.",
+      sinusitis: "Sinusitis causes face pain, nasal congestion, and headache. Nasal sprays and antibiotics (if infected) help. Use steam and stay hydrated.",
+      "sore throat": "A sore throat makes swallowing painful and may cause hoarseness. Lozenges and warm salt water gargle help. Drink warm fluids and rest your voice.",
+      ulcer: "Ulcers cause stomach pain, nausea, and bloating. Antacids and PPIs like pantoprazole are used. Avoid spicy food and stress."
+    };
+
+    const diseases = [
+      'fever', 'cold', 'headache', 'diarrhea', 'cough', 'malaria',
+      'flu', 'dengue', 'allergy', 'anemia', 'asthma', 'bronchitis',
+      'chickenpox', 'constipation', 'covid-19', 'depression', 'diabetes',
+      'eczema', 'fatigue', 'gastritis', 'heartburn', 'hypertension',
+      'insomnia', 'jaundice', 'migraine', 'nausea', 'pneumonia',
+      'sinusitis', 'sore throat', 'ulcer'
+    ];
+
+    const beep = new Audio('https://freesound.org/data/previews/341/341695_3248244-lq.mp3');
+
+    function addMessage(content, sender) {
+      const msg = document.createElement('div');
+      msg.className = `message ${sender}-message`;
+
+      const icon = document.createElement('img');
+      icon.src = sender === 'bot'
+        ? 'https://cdn-icons-png.flaticon.com/512/4712/4712027.png'
+        : 'https://cdn-icons-png.flaticon.com/512/1946/1946429.png';
+      icon.alt = sender;
+      icon.onerror = () => { icon.style.display = 'none'; };
+
+      const span = document.createElement('span');
+      span.textContent = content;
+
+      msg.appendChild(icon);
+      msg.appendChild(span);
+
+      const chatBody = document.getElementById('chatBody');
+      chatBody.appendChild(msg);
+      chatBody.scrollTop = chatBody.scrollHeight;
+
+      if (sender === 'bot') beep.play();
+    }
+
+    function handleSelection(disease) {
+      addMessage(disease, 'user');
+
+      setTimeout(() => {
+        const loadingMsg = document.createElement('div');
+        loadingMsg.className = 'message bot-message';
+        loadingMsg.id = 'typing';
+        loadingMsg.innerHTML = '<img src="https://cdn-icons-png.flaticon.com/512/4712/4712027.png" width="24" height="24"> <span>Typing...</span>';
+        document.getElementById('chatBody').appendChild(loadingMsg);
+        document.getElementById('chatBody').scrollTop = document.getElementById('chatBody').scrollHeight;
+
+        setTimeout(() => {
+          const response = knowledgeBase[disease] || "Sorry, I couldn't find specific help. Please consult a nearby clinic.";
+          document.getElementById('typing').remove();
+          addMessage(response, 'bot');
+        }, 800);
+      }, 400);
+    }
+
+    window.onload = () => {
+      addMessage("Hi! I'm HealthBot. Tap a disease below to learn more.", 'bot');
+      const list = document.getElementById('diseaseList');
+      diseases.forEach(d => {
+        const btn = document.createElement('button');
+        btn.textContent = d.charAt(0).toUpperCase() + d.slice(1);
+        btn.className = 'disease-btn';
+        btn.onclick = () => handleSelection(d.toLowerCase());
+        list.appendChild(btn);
+      });
+      list.style.display = 'flex';
+    };
+  </script>
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="lib/easing/easing.min.js"></script>
+<script src="lib/waypoints/waypoints.min.js"></script>
+<script src="lib/owlcarousel/owl.carousel.min.js"></script>
+<script src="lib/tempusdominus/js/moment.min.js"></script>
+<script src="lib/tempusdominus/js/moment-timezone.min.js"></script>
+<script src="lib/tempusdominus/js/tempusdominus-bootstrap-4.min.js"></script>
+  <footer class="disclaimer">
+    ⚠️ This is a basic informational bot. For accurate diagnosis and treatment, always consult a certified medical professional.
+  </footer>
+</body>
+</html>

@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Find Nearest Hospital</title>
+  <!-- Favicon -->
+  <link href="img/favicon.ico" rel="icon">
+
+  <!-- Google Web Fonts -->
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@400;700&family=Roboto:wght@400;700&display=swap" rel="stylesheet">  
+
+  <!-- Icon Font Stylesheet -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.0/css/all.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
+
+  <!-- Libraries Stylesheet -->
+  <link href="lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
+  <link href="lib/tempusdominus/css/tempusdominus-bootstrap-4.min.css" rel="stylesheet" />
+
+  <!-- Customized Bootstrap Stylesheet -->
+  <link href="css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- Template Stylesheet -->
+  <link href="css/style.css" rel="stylesheet">
+  <style>
+    #map {
+      height: 100vh;
+      width: 100%;
+    }
+    #locateBtn {
+      position: absolute;
+      top: 120px;
+      left: 1575px;
+      z-index: 999;
+      background-color: white;
+      color: #1d4ed8;
+      padding: 6px 10px;
+      border-radius: 4px;
+      font-size: 14px;
+      font-weight: bold;
+      border: 1px solid #1d4ed8;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+    #locateBtn img {
+      width: 26px;
+      height: 26px;
+    }
+    .legend {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 20px;
+      margin-top: -10px;
+      padding-bottom: 10px;
+    }
+    .legend-item {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      font-size: 14px;
+    }
+    .legend-item img {
+      height: 22px;
+      width: 22px;
+    }
+    .legend-label {
+      font-weight: 500;
+    }
+    #yourLocationText {
+      position: absolute;
+      top: 90px;
+      left: 1550px;
+      z-index: 999;
+      background-color: white;
+      color: #1d4ed8;
+      padding: 4px 8px;
+      border-radius: 4px;
+      font-size: 13px;
+      font-weight: bold;
+      border: 1px solid #1d4ed8;
+    }
+  </style>
+</head>
+<body>
+  <!-- Navbar Start -->
+  <div class="container-fluid sticky-top bg-white shadow-sm">
+    <div class="container">
+        <nav class="navbar navbar-expand-lg bg-white navbar-light py-3 py-lg-0">
+            <a href="index.html" class="navbar-brand">
+                <h1 class="m-0 text-uppercase text-primary"><i class="fa fa-clinic-medical me-2"></i>MEDIXO</h1>
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarCollapse">
+                <div class="navbar-nav ms-auto py-0">
+                    <a href="index.html" class="nav-item nav-link active">Home</a>
+                    
+                    <a href="service.html" class="nav-item nav-link">Service</a>
+                    
+                    <div class="nav-item dropdown">
+                        <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Pages</a>
+                        <div class="dropdown-menu m-0">
+                            <a href="appointment.html" class="dropdown-item">Appointment</a>
+                            <a href="Location.html" class="dropdown-item">Nearest HealthCare</a>
+                            <a href="health metric.html" class="dropdown-item">Health Metric</a>
+                            <a href="ChatBot.html" class="dropdown-item">ChatBot</a>
+                            <a href="Ambulance.html" class="dropdown-item">Nearest Ambulance</a>
+                        </div>
+                    </div>
+                    <a href="contact.html" class="nav-item nav-link">Contact</a>
+                </div>
+            </div>
+        </nav>
+    </div>
+</div>
+<!-- Navbar End -->
+  <h1 style="text-align:center;">Nearest Hospitals</h1>
+
+  <!-- 🔵 Legend section -->
+  <div class="legend">
+    <div class="legend-item">
+      <img src="https://www.freeiconspng.com/uploads/blue-location-icon-png-19.png" alt="Current Location" />
+      <span class="legend-label">Current Location</span>
+    </div>
+    <div class="legend-item">
+      <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRdGu04axn9vlZ-abhl8Vxpj4nxb7Q0-aTc0A&s" alt="Hospital Location" />
+      <span class="legend-label">Hospital Location</span>
+    </div>
+  </div>
+
+  <!-- 🔹 Your Location label -->
+  <div id="yourLocationText">Your Location</div>
+
+  <!-- 🔹 Locate button -->
+  <button id="locateBtn" title="Show My Location">
+    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRK-qe2f-oIhoDNXn7pNCIxeR9UIZE0NwxOHrPwxXl2YaRFs4t07BUntARkfDcdb7ra5ec&usqp=CAU" alt="Locate" />
+  </button>
+
+  <div id="map"></div>
+
+  <script>
+    let map;
+    let userLocation;
+    let userMarker;
+    let userCircle;
+
+    function initMap() {
+      map = new google.maps.Map(document.getElementById("map"), {
+        zoom: 15,
+        center: { lat: 0, lng: 0 },
+      });
+
+      locateUser(true);
+    }
+
+    function locateUser(fetchHospitals = false) {
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition((position) => {
+          userLocation = {
+            lat: position.coords.latitude,
+            lng: position.coords.longitude,
+          };
+
+          map.setCenter(userLocation);
+
+          if (userMarker) userMarker.setMap(null);
+          if (userCircle) userCircle.setMap(null);
+
+          userMarker = new google.maps.Marker({
+            map: map,
+            position: userLocation,
+            title: "Your Location",
+            icon: {
+              url: "https://www.freeiconspng.com/uploads/blue-location-icon-png-19.png",
+              scaledSize: new google.maps.Size(30, 30)
+            }
+          });
+
+          userCircle = new google.maps.Circle({
+            strokeColor: "#1d4ed8",
+            strokeOpacity: 0.8,
+            strokeWeight: 2,
+            fillColor: "#1d4ed8",
+            fillOpacity: 0.2,
+            map,
+            center: userLocation,
+            radius: 200,
+          });
+
+          if (fetchHospitals) {
+            findHospitals();
+          }
+        }, () => {
+          alert("Geolocation permission denied.");
+        });
+      } else {
+        alert("Geolocation not supported by this browser.");
+      }
+    }
+
+    function findHospitals() {
+      const service = new google.maps.places.PlacesService(map);
+      service.textSearch({
+        query: "hospital",
+        location: userLocation,
+        radius: 50000
+      }, (results, status) => {
+        if (status === google.maps.places.PlacesServiceStatus.OK) {
+          results.forEach(place => {
+            const marker = new google.maps.Marker({
+              map: map,
+              position: place.geometry.location,
+              title: place.name,
+              icon: {
+                url: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRdGu04axn9vlZ-abhl8Vxpj4nxb7Q0-aTc0A&s",
+                scaledSize: new google.maps.Size(30, 30)
+              }
+            });
+
+            const infoWindow = new google.maps.InfoWindow();
+
+            const distanceService = new google.maps.DistanceMatrixService();
+            distanceService.getDistanceMatrix({
+              origins: [userLocation],
+              destinations: [place.geometry.location],
+              travelMode: 'DRIVING',
+            }, (response, status) => {
+              if (status === 'OK') {
+                const distance = response.rows[0].elements[0].distance.text;
+                const duration = response.rows[0].elements[0].duration.text;
+
+                marker.addListener('click', () => {
+                  infoWindow.setContent(`
+                    <strong>${place.name}</strong><br>
+                    ${place.formatted_address || place.vicinity || ''}<br>
+                    Distance: ${distance}<br>
+                    Time: ${duration}<br>
+                    <a href="https://www.google.com/maps/dir/?api=1&origin=${userLocation.lat},${userLocation.lng}&destination=${place.geometry.location.lat()},${place.geometry.location.lng()}" target="_blank">Show Directions</a>
+                  `);
+                  infoWindow.open(map, marker);
+                });
+              }
+            });
+          });
+        } else {
+          alert("No hospitals found.");
+        }
+      });
+    }
+
+    document.getElementById("locateBtn").addEventListener("click", () => {
+      locateUser(false);
+    });
+  </script>
+
+  <script async defer
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDmJE1ZIwY2k6Nd2u7vTaQj0nAGEkP-DgA&libraries=places&callback=initMap">
+  </script>
+</body>
+</html>
